@@ -1,0 +1,27 @@
+---
+- name: Setup environment
+  hosts: localhost
+  roles:
+    - setup_environment
+
+- name: Install Terraform & provide instance
+  hosts: localhost
+  roles:
+    - install_terraform
+    - provide_compute
+  tasks:
+    - name: Refresh Inventory to Ensure Latest Hosts are Used
+      meta: refresh_inventory
+
+- name: Verify SSH Connectivity on Dynamic Hosts
+  hosts: dynamic_hosts
+  gather_facts: no
+  roles:
+    - check_ssh
+
+- name: Deploy Wordpress
+  hosts: dynamic_hosts
+  become: true
+  roles:
+    - prepare_docker
+    - wordpress
