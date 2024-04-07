@@ -1,0 +1,10 @@
+---
+- hosts: localhost
+  gather_facts: false
+  roles:
+    - ../../provide_compute
+
+  tasks:
+    - name: Afficher l'adresse IP de l'instance EC2
+      debug:
+        msg: "L'adresse IP de l'instance EC2 est : {{ ec2_info.ec2_info.server_public_ip }}"

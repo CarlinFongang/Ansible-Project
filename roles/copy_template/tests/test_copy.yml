@@ -1,0 +1,10 @@
+- name: Copy Template jinja on target instance
+  hosts: dynamic_hosts
+  become: true
+  roles:
+    - ../../copy_template
+  tasks:
+    - name: Afficher le message de réussite
+      debug:
+        msg: "Opération réussie !"
+      when: ansible_failed_task is undefined

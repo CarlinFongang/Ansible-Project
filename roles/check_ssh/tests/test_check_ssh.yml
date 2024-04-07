@@ -1,0 +1,10 @@
+---
+- hosts: dynamic_hosts
+  gather_facts: false
+  roles:
+    - ../../check_ssh
+  tasks:
+    - name: Afficher le message de réussite
+      debug:
+        msg: "Connexion ssh établie avec succes !"
+      when: ansible_failed_task is undefined

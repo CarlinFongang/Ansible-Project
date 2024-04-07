@@ -1,0 +1,6 @@
+container_name: webapp
+container_image: httpd
+container_ports:
+  - "80:80"
+document_root: "/usr/local/apache2/htdocs" #2
+remote_template_path: "/home/{{ ansible_env.SUDO_USER | default(ansible_env.USER) }}/index.html"

@@ -1,0 +1,5 @@
+- name: Copy website file template
+  ansible.builtin.template:
+    src: index.html.j2
+    dest: "{{ remote_template_path }}"
+    mode: '0644'

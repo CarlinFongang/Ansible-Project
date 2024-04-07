@@ -1,0 +1,26 @@
+---
+- hosts: localhost
+  become: true
+  roles:
+    - ../../setup_environment/
+
+  tasks:
+    - name: Vérifier que les paquets nécessaires sont installés
+      ansible.builtin.package_facts:
+        manager: auto
+
+    - name: Tester la présence des paquets
+      assert:
+        that:
+          - "'unzip' in ansible_facts.packages"
+          - "'python3' in ansible_facts.packages"
+          - "'python3-pip' in ansible_facts.packages"
+          - "'apt-transport-https' in ansible_facts.packages"
+          - "'ca-certificates' in ansible_facts.packages"
+          - "'curl' in ansible_facts.packages"
+          - "'gnupg-agent' in ansible_facts.packages"
+          - "'software-properties-common' in ansible_facts.packages"
+          - "'wget' in ansible_facts.packages"
+          - "'git' in ansible_facts.packages"
+        fail_msg: "Un ou plusieurs paquets requis ne sont pas installés."
+        success_msg: "Tous les paquets requis sont installés."

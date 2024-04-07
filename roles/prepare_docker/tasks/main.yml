@@ -1,0 +1,51 @@
+---
+- name: Install Docker and dependencies
+  ansible.builtin.apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - software-properties-common
+      - gnupg-agent
+    state: present
+    update_cache: yes
+
+- name: Add Docker's official GPG key
+  ansible.builtin.apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+  when: ansible_os_family == "Debian"
+
+- name: Install Docker
+  ansible.builtin.shell: curl -fsSL https://get.docker.com -o get-docker.sh && sh get-docker.sh
+
+- name: Add current user to Docker group
+  ansible.builtin.user:
+    name: "{{ ansible_env.SUDO_USER | default(ansible_env.USER) }}"
+    groups: docker
+    append: true
+
+- name: Ensure pip is installed
+  ansible.builtin.package:
+    name: python3-pip
+    state: present
+  become: true
+
+- name: Install Docker Compose
+  block:
+    - name: Download Docker Compose binary
+      ansible.builtin.get_url:
+        url: "https://github.com/docker/compose/releases/download/{{ docker_compose_version }}/docker-compose-{{ ansible_system }}-{{ ansible_architecture }}"
+        dest: "/usr/local/bin/docker-compose"
+        mode: '0755'
+      become: true
+
+    - name: Verify Docker Compose installation
+      command: docker-compose --version
+      register: docker_compose_version
+      failed_when: docker_compose_version.rc != 0
+
+    - name: Output Docker Compose version
+      debug:
+        msg: "Docker Compose version installed: {{ docker_compose_version.stdout }}"
+  when: ansible_os_family == "Debian" or ansible_os_family == "RedHat"

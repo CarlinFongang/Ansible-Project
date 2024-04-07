@@ -1,0 +1,10 @@
+# wordpress/tasks/main.yml
+---
+- name: Create www-data user
+  ansible.builtin.user:
+    name: www-data
+    state: present
+
+- name: Include ansible-role-containerized-wordpress role
+  include_role:
+    name: ansible-role-containerized-wordpress

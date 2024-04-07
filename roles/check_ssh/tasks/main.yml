@@ -1,0 +1,9 @@
+---
+# tasks/main.yml du rôle check_ssh
+- name: Wait for SSH to come up on the servers
+  ansible.builtin.wait_for:
+    host: "{{ hostvars[item].ansible_host }}"
+    port: 22
+    state: started
+  loop: "{{ groups['dynamic_hosts'] }}"
+  when: "'dynamic_hosts' in groups"

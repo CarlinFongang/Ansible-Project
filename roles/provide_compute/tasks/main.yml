@@ -1,0 +1,33 @@
+---
+- name: Clone repository
+  ansible.builtin.git:
+    repo: "{{ repo_url }}"
+    dest: "{{ repo_dest }}"
+    version: "{{ repo_tag }}"
+    update: yes
+
+- name: Initialize Terraform
+  ansible.builtin.command:
+    cmd: terraform init -reconfigure
+    chdir: "{{ tf_init_apply_path }}"
+
+- name: Apply Terraform configuration
+  ansible.builtin.command:
+    cmd: terraform apply -auto-approve
+    chdir: "{{ tf_init_apply_path }}"
+
+- name: Read EC2 instance IP from generated file
+  ansible.builtin.include_vars:
+    file: "{{ ec2_info_file_path }}"
+    name: ec2_info
+
+- name: Add EC2 instance IP to 'hosts.yml'
+  ansible.builtin.lineinfile:
+    path: "{{ hosts_file_path }}"
+    line: "          ansible_host: {{ ec2_info.ec2_info.server_public_ip }}"
+    create: yes
+  delegate_to: localhost
+
+- name: Debug ec2_info
+  ansible.builtin.debug:
+    var: ec2_info #

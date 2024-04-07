@@ -1,0 +1,27 @@
+ansible_ssh_private_key_file: "files/.secrets/devops-aCD.pem"
+##version de docker-compose
+# docker_compose_version: "1.29.2" 
+
+##Informations relatives à terraform
+# terraform_version: "1.7.5"
+# terraform_architecture: "linux_amd64"
+
+##Variable du role deploy_container, à modifier pour une nouvelle image
+# container_name: webapp
+# container_image: httpd
+# container_ports:
+#   - "80:80"
+# document_root: "/usr/local/apache2/htdocs" #2
+
+
+
+##Variable du role provide_compute, à modifier si nécessaire
+# repo_url: "https://gitlab.com/CarlinFongang-Labs/Ansible/tf-provide-target-instance.git"
+# repo_dest: "/tmp/tf-provide-target-instance"
+# repo_tag: "main"
+# tf_init_apply_path: "/tmp/tf-provide-target-instance/ec2_target_host"
+# ec2_info_file_path: "/tmp/tf-provide-target-instance/ec2_target_host/public_ip.yml"
+# hosts_file_path: "~/local-role/hosts.yml"
+
+## role copy_template
+# remote_template_path: "/home/{{ ansible_env.SUDO_USER | default(ansible_env.USER) }}/index.html" #1

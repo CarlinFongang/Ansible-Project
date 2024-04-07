@@ -1,0 +1,5 @@
+roles:
+  - src: https://github.com/LaboCloud/ansible-role-containerized-wordpress.git
+    scm: git
+    version: "master"
+    name: ansible-role-containerized-wordpress

@@ -1,0 +1,13 @@
+---
+- hosts: localhost
+  gather_facts: false
+  roles:
+    - ../../install_terraform/
+  tasks:
+    - name: Obtenir la version de Terraform
+      command: terraform -v
+      register: terraform_version_output
+
+    - name: Afficher la version de Terraform
+      debug:
+        msg: "La version de Terraform installée est : {{ terraform_version_output.stdout_lines[0] }}"

@@ -1,0 +1,11 @@
+---
+- name: Deploy contenair
+  hosts: dynamic_hosts
+  become: true
+  roles:
+    - ../../deploy_container
+  tasks:
+    - name: Afficher le message de réussite
+      debug:
+        msg: "Opération réussie !"
+      when: ansible_failed_task is undefined

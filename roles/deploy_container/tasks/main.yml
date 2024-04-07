@@ -1,0 +1,10 @@
+---
+- name: Pull and run a Docker container
+  community.docker.docker_container:
+    name: "{{ container_name }}"
+    image: "{{ container_image }}"
+    ports: "{{ container_ports }}"
+    volumes:
+      - "{{ remote_template_path }}:{{ document_root }}/index.html"
+    state: started
+    restart_policy: always

@@ -1,0 +1,5 @@
+- name: Prepare Docker Installation
+  hosts: dynamic_hosts
+  become: true
+  roles:
+    - ../../prepare_docker

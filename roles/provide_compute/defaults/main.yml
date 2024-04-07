@@ -1,0 +1,6 @@
+repo_url: "https://gitlab.com/CarlinFongang-Labs/Ansible/tf-provide-target-instance.git"
+repo_dest: "/tmp/tf-provide-target-instance"
+repo_tag: "main"
+tf_init_apply_path: "/tmp/tf-provide-target-instance/ec2_target_host"
+ec2_info_file_path: "/tmp/tf-provide-target-instance/ec2_target_host/public_ip.yml"
+hosts_file_path: "~/local-role/hosts.yml"
